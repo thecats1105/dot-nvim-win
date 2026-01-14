@@ -5,8 +5,6 @@ return {
   ---@type LazySpec
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = false,
-    branch = "master",
     build = ":TSUpdate",
     opts = {
       ensure_installed = {
@@ -58,7 +56,8 @@ return {
       },
     },
     config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+      local TS = require("nvim-treesitter")
+      TS.setup(opts)
 
       -- MDX
       vim.filetype.add({

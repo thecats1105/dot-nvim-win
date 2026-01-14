@@ -2,7 +2,6 @@ return {
   -- tools
   {
     "mason-org/mason.nvim",
-    version = "1.32.0",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         "stylua",
@@ -139,19 +138,19 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    opts = function()
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      vim.list_extend(keys, {
-        {
-          "gd",
-          function()
-            -- DO NOT RESUSE WINDOW
-            require("telescope.builtin").lsp_definitions({ reuse_win = false })
-          end,
-          desc = "Goto Definition",
-          has = "definition",
+    opts = {
+      servers = {
+        ["*"] = {
+          keys = {
+            {
+              "gd",
+              '<cmd>lua require("telescope.builtin").lsp_definitions({ reuse_win = false })<CR>',
+              desc = "Goto Definition",
+              has = "definition",
+            },
+          },
         },
-      })
-    end,
+      },
+    },
   },
 }
